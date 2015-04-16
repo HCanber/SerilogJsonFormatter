@@ -23,16 +23,3 @@ using System.Runtime.InteropServices;
 [assembly: Guid("739031d8-ecd3-4602-a60b-6ce530d1d2e6")]
 
 [assembly: InternalsVisibleTo("JsonFormatters.Tests")]
-
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.2.3.0")]
-[assembly: AssemblyFileVersion("0.2.3.0")]
