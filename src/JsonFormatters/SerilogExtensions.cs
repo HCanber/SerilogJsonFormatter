@@ -32,7 +32,7 @@ namespace Serilog
 		/// <para>Properties that starts and ends with two underscores, e.g. <c>{__InlineMe__}</c>. Their values will not be written and the properties will be replaced by their values in the message template.</para>
 		/// 
 		/// <para>The default behavior can be replaced by specifying <paramref name="propertyFilter" />.
-		/// For example, to put all properties under a property named <c>properties</c> set it to <see cref="PropertyFilters.InlineNoFields" />.</para>
+		/// For example, to put all properties under a property named <c>properties</c> set it to <see cref="PropertyFilters.AllPropertiesUnderSharedProperty" />.</para>
 		/// 
 		/// <example>If the messageTemplate is <c>"{Value} {_Remove1} {_Remove2} {__Inline__}"</c> and the values are their names as strings the result will be:
 		/// <code>
@@ -48,7 +48,7 @@ namespace Serilog
 		/// <para>Filters can be chained so if you want to override the default behavior you can <c>yourFilter + PropertyFilters.Default</c> to have <c>yourFilter</c> 
 		/// applied before the defaults</para>
 		/// 
-		/// <para>To not remove properties that starts with underscore, set <paramref name="propertyFilter"/> to <see cref="PropertyFilters.ExcludeIntProperties"/></para>
+		/// <para>To not remove properties that starts with underscore, set <paramref name="propertyFilter"/> to <see cref="PropertyFilters.IntPropertiesExcluded"/></para>
 		/// 
 		/// <para>The property names for message template, message, timestamp and so on are specified in the class <see cref="PropertyNames"/></para>
 		/// </summary>
