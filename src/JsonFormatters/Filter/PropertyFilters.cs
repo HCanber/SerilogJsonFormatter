@@ -18,6 +18,29 @@ namespace Hcanber.Serilog.JsonFormatters.Filter
 			}
 		}
 
+		/// <summary>
+		/// Excludes the values for properties with the specified name.
+		/// By default the property will be replaced in the messaget template as well.
+		/// Use <paramref name="messageTemplateAction"/> to specify other behaviors.
+		/// </summary>
+		/// <param name="propertyName">Name of the property.</param>
+		/// <param name="messageTemplateAction">OPTIONAL: The message template action. You can either leave th property as is, remove it, or replace with the rendered value. Default: <see cref="MessageTemplateAction.RenderValue"/></param>
+		/// <param name="comparisonType">OPTIONAL: Specifies how the strings will be compared. Default: <see cref="StringComparison.OrdinalIgnoreCase"/></param>
+		/// <returns>The property filter.</returns>
+		public static PropertyFilter ExcludeProperty(string propertyName, MessageTemplateAction? messageTemplateAction=MessageTemplateAction.RenderValue, StringComparison comparisonType = StringComparison.OrdinalIgnoreCase)
+		{
+			return new DelegatePropertyFilter(action =>
+			{
+				if(!action.JsonPropertyAction.HasValue && string.Equals(action.PropertyName, propertyName, comparisonType))
+				{
+					action.JsonPropertyAction = JsonPropertyAction.Exclude;
+					if(messageTemplateAction!=null)
+						action.MessageTemplateAction = messageTemplateAction;
+				}
+				return action;
+			});
+		}
+
 		/// <summary>A handler that inlines no fields.</summary>
 		public static PropertyFilter InlineNoFields
 		{
