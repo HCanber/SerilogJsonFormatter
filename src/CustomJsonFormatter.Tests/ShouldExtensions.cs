@@ -34,7 +34,7 @@ namespace Xunit
 			}
 			catch(Exception e)
 			{
-				Assert.True(false, "Expected an item that matched the predicate, but none was found.");
+				Assert.True(false, "Expected an item that matched the predicate, but none was found: " + e);
 			}
 
 			return default(T);	//Will never get here
