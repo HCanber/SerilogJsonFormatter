@@ -93,9 +93,10 @@ namespace Hcanber.Serilog.JsonFormatters
 				WriteRenderedMessage(message, ref delim, output, logEvent);
 			}
 
+			WriteMessageTemplate(logEvent.MessageTemplate, properties, ref delim, output, logEvent);
+
 			if(logEvent.Properties.Count != 0)
 				WriteProperties(properties, ref delim, output, logEvent);
-			WriteMessageTemplate(logEvent.MessageTemplate, properties, ref delim, output, logEvent);
 
 			var exception = logEvent.Exception;
 			if(exception != null)
