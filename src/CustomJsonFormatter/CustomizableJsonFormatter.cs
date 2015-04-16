@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Hcanber.Serilog.JsonFormatters.Filter;
+using Serilog.CustomJsonFormatter.Filter;
 using Serilog.Events;
 using Serilog.Formatting;
 
-namespace Hcanber.Serilog.JsonFormatters
+namespace Serilog.CustomJsonFormatter
 {
 	/// <summary>
 	/// Custom Json formatter that's more customizable than the normal JsonFormatter.

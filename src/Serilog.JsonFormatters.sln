@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonFormatters", "JsonFormatters\JsonFormatters.csproj", "{4DF02F45-0EE7-4AA4-84B2-D545834E579C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomJsonFormatter", "CustomJsonFormatter\CustomJsonFormatter.csproj", "{4DF02F45-0EE7-4AA4-84B2-D545834E579C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonFormatters.Tests", "JsonFormatters.Tests\JsonFormatters.Tests.csproj", "{24B8F2CF-96E3-4A53-837B-349003C50DC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomJsonFormatter.Tests", "CustomJsonFormatter.Tests\CustomJsonFormatter.Tests.csproj", "{24B8F2CF-96E3-4A53-837B-349003C50DC2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3A240ECF-D127-416A-9D36-2BB651EE37C4}"
 	ProjectSection(SolutionItems) = preProject

@@ -1,7 +1,6 @@
 using System;
-using System.Reflection;
 
-namespace Hcanber.Serilog.JsonFormatters
+namespace Serilog.CustomJsonFormatter
 {
 	public class PropertyNames : IEquatable<PropertyNames>
 	{

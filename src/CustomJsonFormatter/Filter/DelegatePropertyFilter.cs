@@ -1,6 +1,6 @@
 using System;
 
-namespace Hcanber.Serilog.JsonFormatters.Filter
+namespace Serilog.CustomJsonFormatter.Filter
 {
 	public class DelegatePropertyFilter : PropertyFilter
 	{

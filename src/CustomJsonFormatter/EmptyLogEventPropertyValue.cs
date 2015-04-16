@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Serilog.Events;
 
-namespace Hcanber.Serilog.JsonFormatters
+namespace Serilog.CustomJsonFormatter
 {
 	public class EmptyLogEventPropertyValue : LogEventPropertyValue
 	{

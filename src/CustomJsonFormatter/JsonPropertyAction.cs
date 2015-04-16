@@ -1,4 +1,4 @@
-namespace Hcanber.Serilog.JsonFormatters
+namespace Serilog.CustomJsonFormatter
 {
 	public enum JsonPropertyAction
 	{

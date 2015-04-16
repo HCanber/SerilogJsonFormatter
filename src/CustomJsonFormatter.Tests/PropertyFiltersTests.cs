@@ -1,8 +1,7 @@
-using Hcanber.Serilog.JsonFormatters;
-using Hcanber.Serilog.JsonFormatters.Filter;
+using Serilog.CustomJsonFormatter.Filter;
 using Xunit;
 
-namespace JsonFormatters.Tests
+namespace Serilog.CustomJsonFormatter.Tests
 {
 	public class PropertyFiltersTests
 	{

@@ -1,7 +1,7 @@
 using System.Text;
 using xxHashSharp;
 
-namespace Hcanber.Serilog.JsonFormatters
+namespace Serilog.CustomJsonFormatter
 {
 	public class XxHashStringHasher : IStringHasher
 	{

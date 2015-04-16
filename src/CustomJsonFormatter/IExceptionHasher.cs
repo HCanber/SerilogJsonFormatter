@@ -1,6 +1,6 @@
 using System;
 
-namespace Hcanber.Serilog.JsonFormatters
+namespace Serilog.CustomJsonFormatter
 {
 	public interface IExceptionHasher
 	{

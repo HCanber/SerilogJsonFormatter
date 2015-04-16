@@ -8,8 +8,8 @@
     <ProjectGuid>{24B8F2CF-96E3-4A53-837B-349003C50DC2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JsonFormatters.Tests</RootNamespace>
-    <AssemblyName>JsonFormatters.Tests</AssemblyName>
+    <RootNamespace>Serilog.CustomJsonFormatter.Tests</RootNamespace>
+    <AssemblyName>Serilog.CustomJsonFormatter.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>a9c883f0</NuGetPackageImportStamp>
@@ -73,9 +73,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JsonFormatters\JsonFormatters.csproj">
+    <ProjectReference Include="..\CustomJsonFormatter\CustomJsonFormatter.csproj">
       <Project>{4DF02F45-0EE7-4AA4-84B2-D545834E579C}</Project>
-      <Name>JsonFormatters</Name>
+      <Name>CustomJsonFormatter</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

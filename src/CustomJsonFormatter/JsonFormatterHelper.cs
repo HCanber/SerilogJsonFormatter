@@ -4,7 +4,7 @@ using System.IO;
 using Serilog.Events;
 using Serilog.Formatting.Json;
 
-namespace Hcanber.Serilog.JsonFormatters
+namespace Serilog.CustomJsonFormatter
 {
 	public class JsonFormatterHelper
 	{

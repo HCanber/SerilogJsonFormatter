@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("JsonFormatters.Tests")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Serilog.CustomJsonFormatter")]
+[assembly: AssemblyDescription("A JsonFormatter for Serilog that is more customizable than the default. By default it formats a LogEvent in the LogStash format. It can be configured to produce other formats as well.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("TCNE")]
-[assembly: AssemblyProduct("JsonFormatters.Tests")]
-[assembly: AssemblyCopyright("Copyright © TCNE 2015")]
+[assembly: AssemblyCompany("HCanber")]
+[assembly: AssemblyProduct("Serilog.CustomJsonFormatter")]
+[assembly: AssemblyCopyright("Copyright © 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,15 +20,6 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("61f8dffe-28fa-4017-8b86-fb901e6d29e0")]
+[assembly: Guid("739031d8-ecd3-4602-a60b-6ce530d1d2e6")]
 
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
+[assembly: InternalsVisibleTo("Serilog.CustomJsonFormatter.Tests")]

@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Hcanber.Serilog.JsonFormatters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog.Events;
 using Serilog.Parsing;
 using Xunit;
 
-namespace JsonFormatters.Tests
+namespace Serilog.CustomJsonFormatter.Tests
 {
 	public class CustomizableJsonFormatter_DefaultPropertyFilter_Tests
 	{

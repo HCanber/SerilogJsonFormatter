@@ -1,7 +1,7 @@
 ﻿using Serilog.Core;
 using Serilog.Events;
 
-namespace Hcanber.Serilog.JsonFormatters
+namespace Serilog.CustomJsonFormatter
 {
 	public class ExceptionHashEnricher : ILogEventEnricher
 	{

@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
-using Hcanber.Serilog.JsonFormatters;
-using Hcanber.Serilog.JsonFormatters.Filter;
 using Serilog.Configuration;
+using Serilog.CustomJsonFormatter;
+using Serilog.CustomJsonFormatter.Filter;
 using Serilog.Events;
 using Serilog.Formatting;
 using Serilog.Sinks.RollingFile;

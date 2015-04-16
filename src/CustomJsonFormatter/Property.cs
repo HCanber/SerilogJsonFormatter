@@ -1,7 +1,6 @@
-﻿using System;
-using Serilog.Events;
+﻿using Serilog.Events;
 
-namespace Hcanber.Serilog.JsonFormatters
+namespace Serilog.CustomJsonFormatter
 {
 	public class Property
 	{

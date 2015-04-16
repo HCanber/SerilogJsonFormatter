@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Hcanber.Serilog.JsonFormatters
+namespace Serilog.CustomJsonFormatter
 {
 	public class DefaultExceptionHasher : IExceptionHasher
 	{
