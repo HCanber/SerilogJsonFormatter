@@ -6,7 +6,12 @@ namespace Hcanber.Serilog.JsonFormatters.Filter
 
 		public static PropertyFilter operator +(PropertyFilter filterFirst, PropertyFilter filterAfter)
 		{
-			return new CombinedFilter(filterFirst,filterAfter);
+			return new CombinedFilter(filterFirst, filterAfter);
+		}
+
+		public static PropertyFilter operator |(PropertyFilter filterFirst, PropertyFilter filterAfter)
+		{
+			return new CombinedFilter(filterFirst, filterAfter);
 		}
 
 		private class CombinedFilter : PropertyFilter
