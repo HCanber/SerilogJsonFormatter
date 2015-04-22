@@ -199,6 +199,22 @@ namespace Serilog.CustomJsonFormatter.Filter
 		}
 
 		/// <summary>
+		/// A filter that converts all property names to camel case, so "MyValue" will become "myValue"
+		/// </summary>
+		public static PropertyFilter CamelCasePropertyNames
+		{
+			get
+			{
+				return new DelegatePropertyFilter(action =>
+				{
+					var propertyName = action.PropertyName[0];
+					action.PropertyName = char.ToLowerInvariant(propertyName) + action.PropertyName.Substring(1);
+					return action;
+				});
+			}
+		}
+
+		/// <summary>
 		/// The default handler, that<br/>
 		/// - if the property names consists of only digits, for example <c>{0}</c>, its value is excluded.<br/>
 		/// - all other properties are inline and placed directly under the root in the resulting json object.<br/>
