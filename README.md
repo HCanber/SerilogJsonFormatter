@@ -134,7 +134,8 @@ The class `PropertyFilters` contains a few filters.
 | `IntPropertiesUnderSharedProperty` | Unless a previous filter has specified an action, this filter makes all properties with a name consisting of only digits, like `{0}` or `{1}`, to be written under the shared `properties` property |
 | `IntPropertiesExcluded` | Unless a previous filter has specified an action, this filter makes all properties with a name consisting of only digits, like `{0}` or `{1}`, to be excluded from the json object |
 | `ExcludeProperty(name)` |  Unless a previous filter has specified an action, this filter makes all properties with the specified a name, to be excluded from the json object. By default it ignores casing and will also replace the property in the message template with the rendered value. The default behavior can be changed via named parameters. |
-| `ExcludePropertiesStartingWithUnderscore()` |  Unless a previous filter has specified an action, this filter makes all properties with names that starts with an underscore, to be excluded from the json object. By default it will also replace the property in the message template with the rendered value. The default behavior can be changed via named parameters. |
+| `ExcludePropertiesStartingWithUnderscore` |  Unless a previous filter has specified an action, this filter makes all properties with names that starts with an underscore, to be excluded from the json object. By default it will also replace the property in the message template with the rendered value. The default behavior can be changed via named parameters. |
+| `CamelCasePropertyNames` | Makes all property names camel case, so `MyValue` becomes `myValue` |
 | `Default` | The default filter. Chains the filters `IntPropertiesExcluded`  `AllPropertiesInlined`
 
 ### Chaining filters
