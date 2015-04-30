@@ -71,13 +71,17 @@ namespace Serilog.CustomJsonFormatter
 
 			if(!_omitEnclosingObject)
 				output.Write("{");
-
-			WriteContent(logEvent, output);
-
-			if(!_omitEnclosingObject)
+			try
 			{
-				output.Write("}");
-				output.Write(_closingDelimiter);
+				WriteContent(logEvent, output);
+			}
+			finally
+			{
+				if(!_omitEnclosingObject)
+				{
+					output.Write("}");
+					output.Write(_closingDelimiter);
+				}
 			}
 		}
 
@@ -89,7 +93,15 @@ namespace Serilog.CustomJsonFormatter
 			var properties = DeterminePropertiesHandling(logEvent);
 			if(_shouldRenderMessage)
 			{
-				var message = RenderMessage(logEvent, _formatProvider);
+				string message;
+				try
+				{
+					message = RenderMessage(logEvent, _formatProvider);
+				}
+				catch(Exception e)
+				{
+					message = "Failed to render message: " + e.Message;
+				}
 				WriteRenderedMessage(message, ref delim, output, logEvent);
 			}
 
