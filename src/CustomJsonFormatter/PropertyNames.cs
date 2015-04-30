@@ -2,7 +2,7 @@ using System;
 
 namespace Serilog.CustomJsonFormatter
 {
-	public class PropertyNames : IEquatable<PropertyNames>
+	public class PropertyNames
 	{
 		public PropertyNames()
 		{
@@ -47,40 +47,6 @@ namespace Serilog.CustomJsonFormatter
 		/// </summary>
 		public string FormattingErrors { get; set; }
 
-		public bool Equals(PropertyNames other)
-		{
-			if(ReferenceEquals(null, other)) return false;
-			if(ReferenceEquals(this, other)) return true;
-			return string.Equals(Properties, other.Properties) && string.Equals(Exception, other.Exception) && string.Equals(ExceptionHash, other.ExceptionHash);
-		}
 
-		public override bool Equals(object obj)
-		{
-			if(ReferenceEquals(null, obj)) return false;
-			if(ReferenceEquals(this, obj)) return true;
-			if(obj.GetType() != this.GetType()) return false;
-			return Equals((PropertyNames) obj);
-		}
-
-		public override int GetHashCode()
-		{
-			unchecked
-			{
-				var hashCode = (Properties != null ? Properties.GetHashCode() : 0);
-				hashCode = (hashCode*397) ^ (Exception != null ? Exception.GetHashCode() : 0);
-				hashCode = (hashCode*397) ^ (ExceptionHash != null ? ExceptionHash.GetHashCode() : 0);
-				return hashCode;
-			}
-		}
-
-		public static bool operator ==(PropertyNames left, PropertyNames right)
-		{
-			return Equals(left, right);
-		}
-
-		public static bool operator !=(PropertyNames left, PropertyNames right)
-		{
-			return !Equals(left, right);
-		}
 	}
 }
