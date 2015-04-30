@@ -109,7 +109,6 @@ namespace Serilog.CustomJsonFormatter.Filter
 					action.JsonPropertyAction = JsonPropertyAction.Exclude;
 					if(messageTemplateAction != null)
 						action.MessageTemplateAction = messageTemplateAction;
-					action.PropertyName = propertyName.Substring(1);
 				}
 				return action;
 			});
