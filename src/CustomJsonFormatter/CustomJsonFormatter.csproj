@@ -51,6 +51,7 @@
     <Compile Include="Filter\PropertyFilter.cs" />
     <Compile Include="IStringHasher.cs" />
     <Compile Include="Property.cs" />
+    <Compile Include="StringBuilderExtensions.cs" />
     <Compile Include="XxHashStringHasher.cs" />
     <Compile Include="xxHash.cs" />
     <Compile Include="EmptyLogEventPropertyValue.cs" />

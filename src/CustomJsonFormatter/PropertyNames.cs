@@ -14,6 +14,7 @@ namespace Serilog.CustomJsonFormatter
 			MessageTemplateHash = "templateHash";
 			Level = "level";
 			Timestamp = "@timestamp";
+			FormattingErrors = "_formattingErrors";
 		}
 		/// <summary>
 		/// The name of the object where non-inlined properties are written. Set this to <c>null</c> to remove this entirely from the output.
@@ -39,6 +40,12 @@ namespace Serilog.CustomJsonFormatter
 		public string MessageTemplateHash { get; set; }
 		public string Level { get; set; }
 		public string Timestamp { get; set; }
+
+		/// <summary>
+		/// The name of the property which will contain the error message if something went wrong during formatting.
+		/// Default: <c>_formattingErrors</c>
+		/// </summary>
+		public string FormattingErrors { get; set; }
 
 		public bool Equals(PropertyNames other)
 		{

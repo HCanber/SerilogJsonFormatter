@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Serilog.CustomJsonFormatter.Filter;
 using Serilog.Events;
 using Serilog.Formatting;
@@ -91,29 +92,29 @@ namespace Serilog.CustomJsonFormatter
 			WriteTimestamp(logEvent.Timestamp, ref delim, output, logEvent);
 			WriteLevel(logEvent.Level, ref delim, output, logEvent);
 			var properties = DeterminePropertiesHandling(logEvent);
+			var errorSb = new StringBuilder();
+
 			if(_shouldRenderMessage)
 			{
-				string message;
-				try
-				{
-					message = RenderMessage(logEvent, _formatProvider);
-				}
-				catch(Exception e)
-				{
-					message = "Failed to render message: " + e.Message;
-				}
-				WriteRenderedMessage(message, ref delim, output, logEvent);
+				var message = RenderMessage(logEvent, _formatProvider, errorSb);
+				if(message != null)
+					WriteRenderedMessage(message, ref delim, output, logEvent);
 			}
 
-			WriteMessageTemplate(logEvent.MessageTemplate, properties, ref delim, output, logEvent);
+			WriteMessageTemplate(logEvent.MessageTemplate, properties, ref delim, output, logEvent, errorSb);
+
 
 			if(logEvent.Properties.Count != 0)
-				WriteProperties(properties, ref delim, output, logEvent);
+				WriteProperties(properties, ref delim, output, logEvent, errorSb);
 
 			var exception = logEvent.Exception;
 			if(exception != null)
 			{
-				WriteException(exception, ref delim, output, logEvent);
+				WriteException(exception, ref delim, output, logEvent, errorSb);
+			}
+			if(errorSb.Length > 0)
+			{
+				WriteErrors(output, errorSb.ToString(), delim);
 			}
 		}
 
@@ -131,16 +132,28 @@ namespace Serilog.CustomJsonFormatter
 			return new Property(name, a.PropertyName, value, a.JsonPropertyAction.GetValueOrDefault(JsonPropertyAction.Inline), a.MessageTemplateAction.GetValueOrDefault(MessageTemplateAction.AsIs));
 		}
 
-		protected virtual string RenderMessage(LogEvent logEvent, IFormatProvider formatProvider)
+		protected virtual string RenderMessage(LogEvent logEvent, IFormatProvider formatProvider, StringBuilder errorSb)
 		{
-			return logEvent.RenderMessage(formatProvider);
+			var messageWriter = new StringWriter();
+			try
+			{
+				logEvent.MessageTemplate.Render(logEvent.Properties, messageWriter, formatProvider);
+				return messageWriter.ToString();
+			}
+			catch(Exception e)
+			{
+				errorSb.AppendDelimiter(" | ");
+				errorSb.Append("Failed to render message. Managed to render \"")
+				.Append(messageWriter).Append("\". Error: ").Append(e.Message);
+			}
+			return null;
 		}
 
 
 		/// <summary>
 		/// Writes out the attached properties
 		/// </summary>
-		protected virtual void WriteProperties(IReadOnlyCollection<Property> properties, ref string delim, TextWriter output, LogEvent logEvent)
+		protected virtual void WriteProperties(IReadOnlyCollection<Property> properties, ref string delim, TextWriter output, LogEvent logEvent, StringBuilder errorSb)
 		{
 			var propertiesToRender = new List<Property>();
 			foreach(var property in properties)
@@ -179,7 +192,7 @@ namespace Serilog.CustomJsonFormatter
 		/// <summary>
 		/// Writes out the attached exception
 		/// </summary>
-		protected virtual void WriteException(Exception exception, ref string delim, TextWriter output, LogEvent logEvent)
+		protected virtual void WriteException(Exception exception, ref string delim, TextWriter output, LogEvent logEvent, StringBuilder errorSb)
 		{
 			var propertyName = _propertyNames.Exception;
 			if(propertyName == null) return;
@@ -197,29 +210,37 @@ namespace Serilog.CustomJsonFormatter
 			WriteJsonProperty(output, propertyName, message, ref delim);
 		}
 
-		protected virtual void WriteMessageTemplate(MessageTemplate messageTemplate, IReadOnlyCollection<Property> properties, ref string delim, TextWriter output, LogEvent logEvent)
+		protected virtual void WriteMessageTemplate(MessageTemplate messageTemplate, IReadOnlyCollection<Property> properties, ref string delim, TextWriter output, LogEvent logEvent, StringBuilder errorSb)
 		{
 			var propertyName = _propertyNames.MessageTemplate;
-			if(propertyName == null) return;
-			var messageTemplateText = messageTemplate.Text;
+			if(propertyName == null || messageTemplate == null) return;
+			var messageTemplateText = GetMessageTemplateText(messageTemplate, properties, errorSb);
+
+			WriteMessageTemplate(messageTemplateText, ref delim, output);
+		}
+
+		protected virtual string GetMessageTemplateText(MessageTemplate messageTemplate, IReadOnlyCollection<Property> properties, StringBuilder errorSb)
+		{
 			var templateHandlingNeeded = properties.Any(p => p.MessageTemplateAction != MessageTemplateAction.AsIs);
-			if(templateHandlingNeeded)
+			if(!templateHandlingNeeded) return messageTemplate.Text;
+
+			var valuesToReplace = properties.Select(p =>
 			{
-				var valuesToReplace = properties.Select(p =>
+				switch(p.MessageTemplateAction)
 				{
-					switch(p.MessageTemplateAction)
-					{
-						case MessageTemplateAction.AsIs:
-							return (Tuple<string, LogEventPropertyValue>) null;
-						case MessageTemplateAction.RenderValue:
-							return Tuple.Create(p.MessageTemplateName, p.Value);
-						case MessageTemplateAction.Remove:
-							return Tuple.Create(p.MessageTemplateName, (LogEventPropertyValue)EmptyLogEventPropertyValue.Instance);
-						default:
-							throw new ArgumentOutOfRangeException();
-					}
-				}).Where(t => t != null).ToDictionary(t => t.Item1, t => t.Item2);
-				var writer = new StringWriter();
+					case MessageTemplateAction.AsIs:
+						return (Tuple<string, LogEventPropertyValue>) null;
+					case MessageTemplateAction.RenderValue:
+						return Tuple.Create(p.MessageTemplateName, p.Value);
+					case MessageTemplateAction.Remove:
+						return Tuple.Create(p.MessageTemplateName, (LogEventPropertyValue) EmptyLogEventPropertyValue.Instance);
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
+			}).Where(t => t != null).ToDictionary(t => t.Item1, t => t.Item2);
+			var writer = new StringWriter();
+			try
+			{
 				foreach(var messageTemplateToken in messageTemplate.Tokens)
 				{
 					//Render the template. 
@@ -228,10 +249,15 @@ namespace Serilog.CustomJsonFormatter
 					// - Other properties will be rendered as in the original template
 					messageTemplateToken.Render(valuesToReplace, writer, _formatProvider);
 				}
-				messageTemplateText = writer.ToString();
+			return writer.ToString();
 			}
-
-			WriteMessageTemplate(messageTemplateText, ref delim, output);
+			catch(Exception e)
+			{
+				errorSb.AppendDelimiter(" | ");
+				errorSb.Append("Failed to render message template. Managed to render \"")
+					.Append(writer).Append("\". Error: ").Append(e.Message);
+			}
+			return messageTemplate.Text;
 		}
 
 		/// <summary>
@@ -265,6 +291,12 @@ namespace Serilog.CustomJsonFormatter
 			if(propertyName == null) return;
 			WriteJsonProperty(output, propertyName, timestamp, ref delim);
 		}
+
+		protected virtual void WriteErrors(TextWriter output, string errors, string delim)
+		{
+			WriteJsonProperty(output, _propertyNames.FormattingErrors, errors, ref delim);
+		}
+
 
 
 		protected virtual void WriteJsonProperty(TextWriter output, string propertyName, object value, ref string delim)
