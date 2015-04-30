@@ -64,10 +64,12 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CustomizableJsonFormatterTests.cs" />
     <Compile Include="CustomizableJsonFormatter_DefaultPropertyFilter_Tests.cs" />
     <Compile Include="PropertyFiltersTests.cs" />
     <Compile Include="ShouldExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextWriterSink.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
